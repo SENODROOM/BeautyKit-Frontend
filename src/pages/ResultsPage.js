@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Ambient from '../components/Ambient';
-import Avatar from '../components/Avatar';
+import HeroIllustration from '../components/HeroIllustration';
 import ColorWheel from '../components/ColorWheel';
 import SkinTonePanel from '../components/SkinTonePanel';
 import SaveProfileModal from '../components/SaveProfileModal';
@@ -75,23 +75,9 @@ export default function ResultsPage({ user, setPage, setAuthMode, results, captu
 
           {/* REAL PHOTO with natural CSS makeup overlays */}
           <div className="avatar-container">
-            <div className="avatar-bg-glow" />
-            {capturedImage ? (
-              <>
-                <img src={capturedImage} alt="Your scan" className="real-photo-display" />
-                {/* Natural blush — airbrushed sweep across cheekbones */}
-                <div className="makeup-overlay-wrap">
-                  <div className="blush-overlay-left" style={{ '--bc': avatarColors.blush }} />
-                  <div className="blush-overlay-right" style={{ '--bc': avatarColors.blush }} />
-                  <div className="lip-overlay" style={{ background: `${avatarColors.lipstick}88` }} />
-                  <div className="eyeshadow-overlay-left" style={{ '--shadow-color': avatarColors.eyeshadow + '99' }} />
-                  <div className="eyeshadow-overlay-right" style={{ '--shadow-color': avatarColors.eyeshadow + '99' }} />
-                </div>
-              </>
-            ) : (
-              <Avatar colors={avatarColors} />
-            )}
-          </div>
+  <div className="avatar-bg-glow" />
+  <HeroIllustration colors={avatarColors} />
+</div>
 
           <p className="avatar-hint">Tap any swatch below to preview on your photo →</p>
 
