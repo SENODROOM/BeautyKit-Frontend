@@ -1,7 +1,6 @@
 # BeauKit — Frontend
 
 > AI-Powered Skin Tone Analysis & Personalized Beauty Intelligence
-
 [![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=flat-square&logo=react&logoColor=white)](https://react.dev/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES2023-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![CSS3](https://img.shields.io/badge/CSS3-Design_System-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
@@ -34,7 +33,6 @@ BeauKit is a luxury, AI-driven beauty intelligence application. The frontend del
 The application is a single-page React app built with a bespoke dark design system that blends editorial typography with glassmorphism, ambient lighting effects, and gold-accented UI components.
 
 > **Note:** This repository covers the **frontend client only**. The backend REST API (Node/Express + database) lives in a separate `backend/` directory and must be running for analysis and authentication features to function.
-
 ---
 
 ## Features
@@ -136,7 +134,6 @@ REACT_APP_API_URL=http://localhost:5000
 ```
 
 > By default, the app points to `http://localhost:5000`. Update this value to your deployed backend URL for staging or production builds.
-
 **4. Start the development server**
 
 ```sh
@@ -166,7 +163,6 @@ frontend/
 ```
 
 > The app is currently structured as a **single-file component architecture** inside `App.js`, with all sub-components (Avatar, page views, modals) co-located. See the [Roadmap](#roadmap) section for plans to modularize.
-
 ---
 
 ## Design System
@@ -288,7 +284,6 @@ Run all commands from the `frontend/` directory:
 | Development | Last 1 version of Chrome, Firefox, Safari |
 
 > Camera capture requires **HTTPS** in production (or `localhost` in development) due to browser `getUserMedia` security constraints.
-
 ---
 
 ## Security Notes
