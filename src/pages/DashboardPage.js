@@ -1,6 +1,7 @@
 import React from 'react';
 import Ambient from '../components/Ambient';
-import Avatar from '../components/Avatar';
+
+import HeroIllustration from '../components/HeroIllustration';
 
 export default function DashboardPage({ user, logout, setPage, profiles, loadProfile, deleteProfile }) {
   return (
@@ -33,7 +34,7 @@ export default function DashboardPage({ user, logout, setPage, profiles, loadPro
             {profiles.map(p => (
               <div key={p.id} className="profile-card" onClick={() => loadProfile(p)}>
                 <div className="profile-avatar-sm">
-                  <Avatar colors={{
+                  <HeroIllustration colors={{
                     skin: p.skinTone.hex,
                     hair: p.recommendations.hair.colors[0]?.hex || '#3B1F0A',
                     top: p.recommendations.clothing.colors[0]?.hex || '#9b7fe8',

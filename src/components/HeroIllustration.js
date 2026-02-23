@@ -28,6 +28,26 @@ export default function HeroIllustration({ colors = {} }) {
         <filter id="softShadow"><feDropShadow dx="0" dy="8" stdDeviation="12" floodColor="#000" floodOpacity="0.5" /></filter>
       </defs>
       <ellipse cx="200" cy="300" rx="200" ry="260" fill="url(#bgGlow)" />
+      {/* Hair */}
+      {/* Hair - Long Open Behind Face */}
+
+{/* Main back hair - full length behind everything */}
+<path d="M118 155 Q110 180 105 220 Q98 270 95 320 Q90 380 92 440 Q94 480 98 520 L302 520 Q306 480 308 440 Q310 380 305 320 Q302 270 295 220 Q290 180 282 155 Q260 130 200 125 Q140 130 118 155Z" fill="url(#hairGrad)" />
+
+{/* Left side hair flowing down */}
+<path d="M118 155 Q100 190 90 240 Q80 300 78 360 Q76 420 80 520 L108 520 Q100 440 102 380 Q104 320 108 270 Q112 220 118 180Z" fill="url(#hairGrad)" />
+
+{/* Right side hair flowing down */}
+<path d="M282 155 Q300 190 310 240 Q320 300 322 360 Q324 420 320 520 L292 520 Q300 440 298 380 Q296 320 292 270 Q288 220 282 180Z" fill="url(#hairGrad)" />
+
+{/* Top of head */}
+<ellipse cx="200" cy="148" rx="84" ry="68" fill="url(#hairGrad)" />
+
+{/* FACE - sits on top of hair */}
+<ellipse cx="200" cy="208" rx="74" ry="82" fill="url(#skinGrad)" filter="url(#softShadow)" />
+
+{/* Hairline swoosh - top only, no overlap on face */}
+<path d="M126 165 Q148 108 200 102 Q252 108 274 165 Q258 140 238 133 Q220 127 200 126 Q180 127 162 133 Q142 140 126 165Z" fill="url(#hairGrad)" />
 
       {/* Dress */}
       <path d="M120 320 Q110 360 90 400 Q70 450 60 520 L340 520 Q330 450 310 400 Q290 360 280 320 Q260 310 200 308 Q140 310 120 320Z" fill="url(#dressGrad)" filter="url(#softShadow)" />
@@ -39,6 +59,7 @@ export default function HeroIllustration({ colors = {} }) {
 
       {/* Neck */}
       <rect x="184" y="272" width="32" height="52" rx="14" fill="url(#skinGrad)" />
+      
 
       {/* Face */}
       <ellipse cx="200" cy="200" rx="80" ry="92" fill="url(#skinGrad)" filter="url(#softShadow)" />
@@ -54,12 +75,7 @@ export default function HeroIllustration({ colors = {} }) {
       <line x1="278" y1="227" x2="278" y2="242" stroke={jewelry} strokeWidth="2.5" />
       <circle cx="278" cy="246" r="5" fill={jewelry} />
 
-      {/* Hair */}
-      <ellipse cx="200" cy="165" rx="82" ry="78" fill="url(#hairGrad)" />
-      <path d="M122 190 Q100 250 108 340 Q118 300 122 260 Q126 230 128 205Z" fill="url(#hairGrad)" />
-      <path d="M278 190 Q300 250 292 340 Q282 300 278 260 Q274 230 272 205Z" fill="url(#hairGrad)" />
-      <ellipse cx="200" cy="208" rx="74" ry="82" fill="url(#skinGrad)" />
-      <path d="M128 170 Q150 118 200 112 Q250 118 272 170 Q258 148 238 142 Q220 136 200 135 Q180 136 162 142 Q142 148 128 170Z" fill="url(#hairGrad)" />
+      
 
       {/* Eyebrows */}
       <path d="M154 162 Q168 154 182 158" stroke="#2a1205" strokeWidth="4" fill="none" strokeLinecap="round" />
