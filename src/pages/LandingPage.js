@@ -1,7 +1,7 @@
 import React from 'react';
 import Ambient from '../components/Ambient';
 import HeroIllustration from '../components/HeroIllustration';
-import Avatar from '../components/Avatar';
+
 
 export default function LandingPage({ setPage, setAuthMode }) {
   return (
@@ -130,12 +130,12 @@ export default function LandingPage({ setPage, setAuthMode }) {
           <div className="af-right">
             <div className="af-avatar-wrap">
               <div className="af-avatar-bg" />
-              <Avatar colors={{ skin: '#B08060', hair: '#1C1C1C', top: '#283593', lipstick: '#8B008B', blush: 'rgba(200,140,180,0.45)', eyeshadow: '#36454F', jewelry: '#C0C0C0', showNecklace: true, showEarrings: true, showRing: true }} />
+              <HeroIllustration colors={{ skin: '#B08060', hair: '#1C1C1C', top: '#283593', lipstick: '#8B008B', blush: 'rgba(200,140,180,0.45)', eyeshadow: '#36454F', jewelry: '#C0C0C0', showNecklace: true, showEarrings: true, showRing: true }} />
               <div className="af-label">Cool undertone — Silver jewellery, Navy outfit, Berry lip</div>
             </div>
             <div className="af-avatar-wrap" style={{ marginTop: '1.5rem' }}>
               <div className="af-avatar-bg warm" />
-              <Avatar colors={{ skin: '#C8956C', hair: '#C4922A', top: '#808000', lipstick: '#FF6B5B', blush: 'rgba(255,160,100,0.4)', eyeshadow: '#CD7F32', jewelry: '#FFD700', showNecklace: true, showEarrings: true, showRing: true }} />
+              <HeroIllustration colors={{ skin: '#C8956C', hair: '#C4922A', top: '#808000', lipstick: '#FF6B5B', blush: 'rgba(255,160,100,0.4)', eyeshadow: '#CD7F32', jewelry: '#FFD700', showNecklace: true, showEarrings: true, showRing: true }} />
               <div className="af-label">Warm undertone — Gold jewellery, Olive outfit, Coral lip</div>
             </div>
           </div>
