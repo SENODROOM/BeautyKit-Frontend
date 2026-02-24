@@ -1,9 +1,95 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Ambient from '../components/Ambient';
 import HeroIllustration from '../components/HeroIllustration';
+import { SKIN_TONES } from '../data/constants';
 
 
 export default function LandingPage({ setPage, setAuthMode }) {
+  const carouselRef = useRef(null);
+  const itemsRef = useRef([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    updateCarouselStyles();
+    let resizeTimer = null;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateCarouselStyles, 120);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    updateCarouselStyles();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
+
+  const goToSlide = (index) => {
+    setCurrentIndex(((index % SKIN_TONES.length) + SKIN_TONES.length) % SKIN_TONES.length);
+  };
+
+  const updateCarouselStyles = () => {
+    const items = itemsRef.current;
+    const totalItems = items.length;
+    if (!items || totalItems === 0) return;
+
+    const isMobile = window.innerWidth <= 768;
+    const isTablet = window.innerWidth <= 1024;
+
+    let spacing1 = 320, spacing2 = 480, spacing3 = 600;
+    if (isMobile) {
+      spacing1 = 220; spacing2 = 340; spacing3 = 440;
+    } else if (isTablet) {
+      spacing1 = 280; spacing2 = 420; spacing3 = 520;
+    }
+
+    items.forEach((item, index) => {
+      let offset = index - currentIndex;
+      if (offset > totalItems / 2) offset -= totalItems;
+      if (offset < -totalItems / 2) offset += totalItems;
+      const absOffset = Math.abs(offset);
+      const sign = offset < 0 ? -1 : 1;
+
+      item.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease';
+
+      if (absOffset === 0) {
+        item.style.transform = 'translate(-50%, -50%) translateZ(0) scale(1)';
+        item.style.opacity = '1';
+        item.style.zIndex = '10';
+      } else if (absOffset === 1) {
+        const translateX = sign * spacing1;
+        const rotation = isMobile ? 25 : 30;
+        const scale = isMobile ? 0.88 : 0.85;
+        item.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(-200px) rotateY(${-sign * rotation}deg) scale(${scale})`;
+        item.style.opacity = '0.85';
+        item.style.zIndex = '5';
+      } else if (absOffset === 2) {
+        const translateX = sign * spacing2;
+        const rotation = isMobile ? 35 : 40;
+        const scale = isMobile ? 0.75 : 0.7;
+        item.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(-350px) rotateY(${-sign * rotation}deg) scale(${scale})`;
+        item.style.opacity = '0.5';
+        item.style.zIndex = '3';
+      } else if (absOffset === 3) {
+        const translateX = sign * spacing3;
+        const rotation = isMobile ? 40 : 45;
+        const scale = isMobile ? 0.65 : 0.6;
+        item.style.transform = `translate(-50%, -50%) translateX(${translateX}px) translateZ(-450px) rotateY(${-sign * rotation}deg) scale(${scale})`;
+        item.style.opacity = '0.3';
+        item.style.zIndex = '2';
+      } else {
+        item.style.transform = 'translate(-50%, -50%) translateZ(-500px) scale(0.5)';
+        item.style.opacity = '0';
+        item.style.zIndex = '1';
+      }
+    });
+  };
+
   return (
     <div className="app landing-app">
       <Ambient />
@@ -90,25 +176,59 @@ export default function LandingPage({ setPage, setAuthMode }) {
               </div>
             ))}
           </div>
-          <div className="undertone-showcase">
-            <div className="section-eyebrow" style={{ marginBottom: '2.5rem' }}>The Three Undertones</div>
-            <div className="undertone-row">
-              {[
-                { label: 'Warm', tone: 'Golden Beige', skin: '#C89060', jewelry: 'Gold', cloth: 'Terracotta, Olive, Camel', lip: 'Coral & Brick', swatches: ['#FFD700', '#C65D3C', '#808000', '#C4922A'] },
-                { label: 'Cool', tone: 'Fair Cool', skin: '#E8C4B0', jewelry: 'Silver', cloth: 'Navy, Lavender, Emerald', lip: 'Berry & Mauve', swatches: ['#C0C0C0', '#283593', '#B39DDB', '#800020'] },
-                { label: 'Neutral', tone: 'Natural Beige', skin: '#D4A882', jewelry: 'Rose Gold', cloth: 'Dusty Rose, Sage, Teal', lip: 'Rose & Mauve', swatches: ['#B76E79', '#D4A5A5', '#8FBC8F', '#8B4513'] },
-              ].map((u, i) => (
-                <div key={i} className="undertone-card">
-                  <div className="undertone-skin" style={{ background: u.skin }} />
-                  <div className="undertone-label">{u.label}</div>
-                  <div className="undertone-tone">{u.tone}</div>
-                  <div className="undertone-details">
-                    <div className="ud-row"><span className="ud-k">Jewellery</span><span>{u.jewelry}</span></div>
-                    <div className="ud-row"><span className="ud-k">Colors</span><span>{u.cloth}</span></div>
-                    <div className="ud-row"><span className="ud-k">Lips</span><span>{u.lip}</span></div>
+          <div className="skin-tone-carousel-section">
+            <div className="section-eyebrow" style={{ marginBottom: '2.5rem', justifyContent: 'center' }}>
+              <span style={{ marginRight: '0.75rem' }}>12 Skin Tone Profiles</span>
+            </div>
+            <h2 className="section-headline" style={{ textAlign: 'center', marginBottom: '4rem' }}>
+              Find Your Perfect<br /><em>Match.</em>
+            </h2>
+            <div className="skin-tone-carousel" ref={carouselRef}>
+              {SKIN_TONES.map((tone, index) => (
+                <div
+                  key={tone.id}
+                  className="skin-tone-carousel-item"
+                  ref={(el) => (itemsRef.current[index] = el)}
+                >
+                  <div className="skin-tone-card-carousel">
+                    <div className="skin-tone-avatar-wrap" onClick={() => goToSlide(index)}>
+                      <HeroIllustration 
+                        id={`carousel-${tone.id}`}
+                        colors={{
+                          skin: tone.hex,
+                          hair: tone.swatches[0],
+                          top: index % 3 === 0 ? '#283593' : index % 3 === 1 ? '#006d6f' : '#6a1a5a',
+                          lipstick: tone.undertone === 'Warm' ? '#C65D3C' : tone.undertone === 'Cool' ? '#B83055' : '#C4728A',
+                          blush: tone.undertone === 'Warm' ? 'rgba(255,130,100,0.35)' : tone.undertone === 'Cool' ? 'rgba(200,100,130,0.35)' : 'rgba(196,114,138,0.35)',
+                          eyeshadow: tone.undertone === 'Warm' ? '#8B4513' : tone.undertone === 'Cool' ? '#7B5EA7' : '#6A5EA7',
+                          jewelry: tone.undertone === 'Warm' ? '#FFD700' : tone.undertone === 'Cool' ? '#C0C0C0' : '#B76E79'
+                        }} 
+                      />
+                    </div>
+                    <div className="skin-tone-info">
+                      <div className="skin-tone-name-carousel">{tone.name}</div>
+                      <div className="skin-tone-meta">
+                        <span className="skin-tone-undertone">{tone.undertone}</span>
+                        <span className="skin-tone-depth">{tone.depth}</span>
+                      </div>
+                      <div className="skin-tone-celebs">{tone.celebrities}</div>
+                      <div className="skin-tone-swatches-carousel">
+                        {tone.swatches.map((s, j) => (
+                          <div key={j} className="st-swatch-mini" style={{ background: s }} />
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <div className="undertone-swatches">{u.swatches.map((s, j) => <div key={j} className="ut-swatch" style={{ background: s }} />)}</div>
                 </div>
+              ))}
+            </div>
+            <div className="carousel-indicators">
+              {SKIN_TONES.map((_, index) => (
+                <div
+                  key={index}
+                  className={`indicator ${index === currentIndex ? 'active' : ''}`}
+                  onClick={() => goToSlide(index)}
+                />
               ))}
             </div>
           </div>
@@ -142,6 +262,48 @@ export default function LandingPage({ setPage, setAuthMode }) {
         </div>
       </section>
 
+      <section className="social-proof-section">
+        <div className="social-proof-inner">
+          <div className="trust-badges">
+            <div className="trust-badge">
+              <span className="trust-icon">⭐</span>
+              <span className="trust-text"><strong>4.9/5</strong> from 10,000+ users</span>
+            </div>
+            <div className="trust-divider" />
+            <div className="trust-badge">
+              <span className="trust-icon">✓</span>
+              <span className="trust-text">Dermatologist-tested</span>
+            </div>
+            <div className="trust-divider" />
+            <div className="trust-badge">
+              <span className="trust-icon">🔒</span>
+              <span className="trust-text">Privacy-first</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="faq-section">
+        <div className="faq-inner">
+          <div className="section-eyebrow">Common Questions</div>
+          <h2 className="section-headline">Everything You Need to<br /><em>Know.</em></h2>
+          <div className="faq-list">
+            {[
+              { q: 'Is my photo data secure?', a: 'Absolutely. All image processing happens locally in your browser. We never store or upload your photos to any server.' },
+              { q: 'How accurate is the analysis?', a: 'Our AI is trained on dermatology color science standards with 95%+ accuracy. It analyzes thousands of pixels to determine your exact undertone and depth.' },
+              { q: 'Can I use it without an account?', a: 'Yes! You can try the skin tone scan instantly without signing up. Create an account only when you want to save your profiles.' },
+              { q: 'What devices are supported?', a: 'BeauKit works on all modern smartphones, tablets, and computers. For best results, use natural daylight when taking photos.' },
+              { q: 'How many profiles can I save?', a: 'You can create unlimited profiles with a free account — perfect for trying different looks or managing family members.' }
+            ].map((item, i) => (
+              <div key={i} className="faq-item">
+                <div className="faq-q">{item.q}</div>
+                <div className="faq-a">{item.a}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="final-cta-section">
         <div className="final-cta-inner">
           <div className="final-ornament">✦</div>
@@ -154,7 +316,7 @@ export default function LandingPage({ setPage, setAuthMode }) {
         </div>
         <footer className="site-footer">
           <span className="footer-brand">Beauty Kit</span>
-          <span className="footer-copy">Beauty intelligence, powered by science.</span>
+          <span className="footer-copy">© 2026 BeauKit. All rights reserved. Beauty intelligence, powered by science.</span>
         </footer>
       </section>
     </div>

@@ -9,22 +9,38 @@ import { CATEGORIES } from '../data/constants';
 export default function ResultsPage({ user, setPage, setAuthMode, results, capturedImage, loadProfiles }) {
   const [activeTab, setActiveTab] = useState('jewelry');
   const [saveModalOpen, setSaveModalOpen] = useState(false);
+  
+  // Safe defaults for results structure
+  const safeResults = results || {};
+  const safeSkinTone = safeResults.skinTone || {};
+  const safeRecommendations = safeResults.recommendations || {};
+  
+  // Ensure all recommendation sub-objects exist with safe defaults
+  const safeRecs = {
+    jewelry: safeRecommendations.jewelry || { metals: [], styles: [], gemstones: [], avoid: '' },
+    clothing: safeRecommendations.clothing || { colors: [], styles: [], fabrics: [], patterns: [], avoid: [] },
+    lipstick: safeRecommendations.lipstick || [],
+    blush: safeRecommendations.blush || [],
+    eyeshadow: safeRecommendations.eyeshadow || [],
+    hair: safeRecommendations.hair || { colors: [], styles: [], treatments: [], avoid: '' }
+  };
+  
   const [avatarColors, setAvatarColors] = useState({
-    skin: results.skinTone.hex,
-    hair: results.recommendations.hair.colors[0]?.hex || '#3B1F0A',
-    top: results.recommendations.clothing.colors[0]?.hex || '#9b7fe8',
-    lipstick: results.recommendations.lipstick[0]?.hex || '#C45C75',
-    blush: results.recommendations.blush[0]?.hex || '#E88070',
-    eyeshadow: results.recommendations.eyeshadow[0]?.hex || '#8B7355',
-    jewelry: results.recommendations.jewelry.metals[0]?.hex || '#FFD700',
+    skin: safeSkinTone.hex || '#C8956C',
+    hair: safeRecommendations.hair?.colors?.[0]?.hex || '#3B1F0A',
+    top: safeRecommendations.clothing?.colors?.[0]?.hex || '#9b7fe8',
+    lipstick: safeRecommendations.lipstick?.[0]?.hex || '#C45C75',
+    blush: safeRecommendations.blush?.[0]?.hex || '#E88070',
+    eyeshadow: safeRecommendations.eyeshadow?.[0]?.hex || '#8B7355',
+    jewelry: safeRecommendations.jewelry?.metals?.[0]?.hex || '#FFD700',
     showNecklace: true,
     showEarrings: true,
     showRing: true
   });
 
-  const recs = results.recommendations;
-  const skinUndertone = results.skinTone?.undertone || 'neutral';
-  const skinHex = results.skinTone?.hex || '#C8956C';
+  const recs = safeRecs;
+  const skinUndertone = safeSkinTone.undertone || 'neutral';
+  const skinHex = safeSkinTone.hex || '#C8956C';
 
   return (
     <div className="app results-app">
@@ -65,10 +81,10 @@ export default function ResultsPage({ user, setPage, setAuthMode, results, captu
             <div className="skin-swatch-display" style={{ background: skinHex }} />
             <div>
               <div className="skin-tone-label">Your Skin Tone</div>
-              <div className="skin-tone-name">{results.skinTone.name}</div>
+              <div className="skin-tone-name">{safeSkinTone.name || 'Unknown'}</div>
               <div className="skin-badges">
-                <span className="badge">{results.skinTone.undertone}</span>
-                <span className="badge">{results.skinTone.depth}</span>
+                <span className="badge">{safeSkinTone.undertone || 'Neutral'}</span>
+                <span className="badge">{safeSkinTone.depth || 'Medium'}</span>
               </div>
             </div>
           </div>
@@ -83,13 +99,13 @@ export default function ResultsPage({ user, setPage, setAuthMode, results, captu
 
           <div className="avatar-controls">
             {[
-              { label: 'Outfit', key: 'top', arr: recs.clothing.colors.slice(0, 8) },
-              { label: 'Hair', key: 'hair', arr: recs.hair.colors.slice(0, 8) },
-              { label: 'Lips', key: 'lipstick', arr: recs.lipstick.slice(0, 8) },
-              { label: 'Blush', key: 'blush', arr: recs.blush.slice(0, 6) },
-              { label: 'Eyes', key: 'eyeshadow', arr: recs.eyeshadow.slice(0, 8) },
-              { label: 'Jewels', key: 'jewelry', arr: recs.jewelry.metals },
-            ].map(({ label, key, arr }) => (
+              { label: 'Outfit', key: 'top', arr: recs.clothing?.colors?.slice(0, 8) || [] },
+              { label: 'Hair', key: 'hair', arr: recs.hair?.colors?.slice(0, 8) || [] },
+              { label: 'Lips', key: 'lipstick', arr: recs.lipstick?.slice(0, 8) || [] },
+              { label: 'Blush', key: 'blush', arr: recs.blush?.slice(0, 6) || [] },
+              { label: 'Eyes', key: 'eyeshadow', arr: recs.eyeshadow?.slice(0, 8) || [] },
+              { label: 'Jewels', key: 'jewelry', arr: recs.jewelry?.metals || [] },
+            ].filter(({ arr }) => arr.length > 0).map(({ label, key, arr }) => (
               <div key={key} className="avatar-control-row">
                 <span className="ctrl-label">{label}</span>
                 <div className="ctrl-swatches">
