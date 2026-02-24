@@ -262,7 +262,7 @@ export default function ResultsPage({ user, setPage, setAuthMode, results, captu
         </div>
       </div>
 
-      <div className="results-footer">✦ Beauty Kit AI — Your personalized beauty intelligence</div>
+     
     </div>
   );
 }
