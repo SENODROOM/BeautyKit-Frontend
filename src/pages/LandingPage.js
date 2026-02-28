@@ -183,44 +183,78 @@ export default function LandingPage({ setPage, setAuthMode }) {
             <h2 className="section-headline" style={{ textAlign: 'center', marginBottom: '4rem' }}>
               Find Your Perfect<br /><em>Match.</em>
             </h2>
-            <div className="skin-tone-carousel" ref={carouselRef}>
-              {SKIN_TONES.map((tone, index) => (
-                <div
-                  key={tone.id}
-                  className="skin-tone-carousel-item"
-                  ref={(el) => (itemsRef.current[index] = el)}
-                >
-                  <div className="skin-tone-card-carousel">
-                    <div className="skin-tone-avatar-wrap" onClick={() => goToSlide(index)}>
-                      <HeroIllustration 
-                        id={`carousel-${tone.id}`}
-                        colors={{
-                          skin: tone.hex,
-                          hair: tone.swatches[0],
-                          top: index % 3 === 0 ? '#283593' : index % 3 === 1 ? '#006d6f' : '#6a1a5a',
-                          lipstick: tone.undertone === 'Warm' ? '#C65D3C' : tone.undertone === 'Cool' ? '#B83055' : '#C4728A',
-                          blush: tone.undertone === 'Warm' ? 'rgba(255,130,100,0.35)' : tone.undertone === 'Cool' ? 'rgba(200,100,130,0.35)' : 'rgba(196,114,138,0.35)',
-                          eyeshadow: tone.undertone === 'Warm' ? '#8B4513' : tone.undertone === 'Cool' ? '#7B5EA7' : '#6A5EA7',
-                          jewelry: tone.undertone === 'Warm' ? '#FFD700' : tone.undertone === 'Cool' ? '#C0C0C0' : '#B76E79'
-                        }} 
-                      />
-                    </div>
-                    <div className="skin-tone-info">
-                      <div className="skin-tone-name-carousel">{tone.name}</div>
-                      <div className="skin-tone-meta">
-                        <span className="skin-tone-undertone">{tone.undertone}</span>
-                        <span className="skin-tone-depth">{tone.depth}</span>
+            <div className="skin-tone-carousel skin-tone-carousel-celebrity" ref={carouselRef}>
+              {SKIN_TONES.map((tone, index) => {
+                const celebNames = tone.celebrities.split(', ');
+                const celebImage = tone.celebrityImages?.[0];
+                return (
+                  <div
+                    key={tone.id}
+                    className="skin-tone-carousel-item skin-tone-carousel-celebrity-item"
+                    ref={(el) => (itemsRef.current[index] = el)}
+                  >
+                    <div className="skin-tone-card-carousel skin-tone-card-carousel-celebrity">
+                      <div className="skin-tone-celebrity-wrap" onClick={() => goToSlide(index)}>
+                        <img 
+                          src={celebImage || ''} 
+                          alt={celebNames[0]}
+                          className="skin-tone-celebrity-img"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            const fallback = e.target.parentNode.querySelector('.skin-tone-celebrity-fallback');
+                            if (fallback) fallback.style.display = 'flex';
+                          }}
+                          onLoad={(e) => {
+                            e.target.style.display = 'block';
+                            const fallback = e.target.parentNode.querySelector('.skin-tone-celebrity-fallback');
+                            if (fallback) fallback.style.display = 'none';
+                          }}
+                        />
+                        <div 
+                          className="skin-tone-celebrity-fallback"
+                          style={{ 
+                            display: 'none',
+                            position: 'absolute',
+                            inset: 0,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            background: `linear-gradient(135deg, ${tone.hex}, ${tone.swatches?.[0] || tone.hex})`
+                          }}
+                        >
+                          <HeroIllustration 
+                            id={`carousel-${tone.id}`}
+                            colors={{
+                              skin: tone.hex,
+                              hair: tone.swatches[0],
+                              top: index % 3 === 0 ? '#283593' : index % 3 === 1 ? '#006d6f' : '#6a1a5a',
+                              lipstick: tone.undertone === 'Warm' ? '#C65D3C' : tone.undertone === 'Cool' ? '#B83055' : '#C4728A',
+                              blush: tone.undertone === 'Warm' ? 'rgba(255,130,100,0.35)' : tone.undertone === 'Cool' ? 'rgba(200,100,130,0.35)' : 'rgba(196,114,138,0.35)',
+                              eyeshadow: tone.undertone === 'Warm' ? '#8B4513' : tone.undertone === 'Cool' ? '#7B5EA7' : '#6A5EA7',
+                              jewelry: tone.undertone === 'Warm' ? '#FFD700' : tone.undertone === 'Cool' ? '#C0C0C0' : '#B76E79'
+                            }} 
+                          />
+                        </div>
+                        <div className="skin-tone-celebrity-overlay">
+                          <div className="skin-tone-celebrity-name-display">{celebNames[0]}</div>
+                        </div>
                       </div>
-                      <div className="skin-tone-celebs">{tone.celebrities}</div>
-                      <div className="skin-tone-swatches-carousel">
-                        {tone.swatches.map((s, j) => (
-                          <div key={j} className="st-swatch-mini" style={{ background: s }} />
-                        ))}
+                      <div className="skin-tone-info">
+                        <div className="skin-tone-name-carousel">{tone.name}</div>
+                        <div className="skin-tone-meta">
+                          <span className="skin-tone-undertone">{tone.undertone}</span>
+                          <span className="skin-tone-depth">{tone.depth}</span>
+                        </div>
+                        <div className="skin-tone-celebs">{tone.celebrities}</div>
+                        <div className="skin-tone-swatches-carousel">
+                          {tone.swatches.map((s, j) => (
+                            <div key={j} className="st-swatch-mini" style={{ background: s }} />
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="carousel-indicators">
               {SKIN_TONES.map((_, index) => (

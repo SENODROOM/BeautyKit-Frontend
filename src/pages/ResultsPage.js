@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Ambient from '../components/Ambient';
 import HeroIllustration from '../components/HeroIllustration';
 import ColorWheel from '../components/ColorWheel';
 import SkinTonePanel from '../components/SkinTonePanel';
 import SaveProfileModal from '../components/SaveProfileModal';
-import { CATEGORIES } from '../data/constants';
+import { CATEGORIES, SKIN_TONES } from '../data/constants';
 
 export default function ResultsPage({ user, setPage, setAuthMode, results, capturedImage, loadProfiles }) {
   const [activeTab, setActiveTab] = useState('jewelry');
@@ -41,6 +41,21 @@ export default function ResultsPage({ user, setPage, setAuthMode, results, captu
   const recs = safeRecs;
   const skinUndertone = safeSkinTone.undertone || 'neutral';
   const skinHex = safeSkinTone.hex || '#C8956C';
+
+  // Find matching skin tone for celebrity reference
+  const [matchedTone, setMatchedTone] = useState(null);
+  
+  useEffect(() => {
+    if (!skinHex) return;
+    const r1 = parseInt(skinHex.slice(1, 3), 16), g1 = parseInt(skinHex.slice(3, 5), 16), b1 = parseInt(skinHex.slice(5, 7), 16);
+    let closest = SKIN_TONES[0], minDist = Infinity;
+    SKIN_TONES.forEach(t => {
+      const r2 = parseInt(t.hex.slice(1, 3), 16), g2 = parseInt(t.hex.slice(3, 5), 16), b2 = parseInt(t.hex.slice(5, 7), 16);
+      const d = (r1 - r2) ** 2 + (g1 - g2) ** 2 + (b1 - b2) ** 2;
+      if (d < minDist) { minDist = d; closest = t; }
+    });
+    setMatchedTone(closest);
+  }, [skinHex]);
 
   return (
     <div className="app results-app">
@@ -91,9 +106,40 @@ export default function ResultsPage({ user, setPage, setAuthMode, results, captu
 
           {/* REAL PHOTO with natural CSS makeup overlays */}
           <div className="avatar-container">
-  <div className="avatar-bg-glow" />
-  <HeroIllustration colors={avatarColors} />
-</div>
+            <div className="avatar-bg-glow" />
+            <HeroIllustration colors={avatarColors} />
+          </div>
+
+          {/* Celebrity Reference */}
+          {matchedTone && (
+            <div className="celebrity-reference">
+              <div className="celebrity-reference-header">
+                <span className="celebrity-reference-icon">✦</span>
+                <span className="celebrity-reference-title">Similar Skin Tone</span>
+              </div>
+              <div className="celebrity-reference-content">
+                {matchedTone.celebrityImages?.[0] ? (
+                  <img 
+                    src={matchedTone.celebrityImages[0]} 
+                    alt={matchedTone.celebrities.split(', ')[0]}
+                    className="celebrity-reference-image"
+                    onError={(e) => { e.target.style.display = 'none'; }}
+                  />
+                ) : (
+                  <div 
+                    className="celebrity-reference-fallback"
+                    style={{ backgroundColor: matchedTone.hex }}
+                  >
+                    <span>{matchedTone.celebrities.split(', ')[0].charAt(0)}</span>
+                  </div>
+                )}
+                <div className="celebrity-reference-info">
+                  <div className="celebrity-reference-names">{matchedTone.celebrities}</div>
+                  <div className="celebrity-reference-tone">{matchedTone.name} · {matchedTone.undertone}</div>
+                </div>
+              </div>
+            </div>
+          )}
 
           <p className="avatar-hint">Tap any swatch below to preview on your photo →</p>
 

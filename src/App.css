@@ -654,7 +654,7 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 5rem;
-  padding: 6rem 5rem;
+  padding: 2rem 5rem;
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
@@ -1767,7 +1767,7 @@ body {
 
 .carousel-indicators {
   position: absolute;
-  top: 20px;
+  
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -4435,5 +4435,492 @@ body {
 
   .cat-nav-icon {
     font-size: 1.4rem;
+  }
+}
+
+/* ============================================
+   CELEBRITY SLIDER COMPONENT
+   ============================================ */
+
+.celebrity-slider {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.celebrity-slider-container {
+  position: relative;
+  background: linear-gradient(145deg, var(--surface), var(--surface2));
+  border-radius: var(--r-xl);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Main Display Area */
+.celebrity-display {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: linear-gradient(180deg, var(--depth) 0%, var(--void) 100%);
+  overflow: hidden;
+}
+
+.celebrity-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.celebrity-image-wrapper.loaded {
+  opacity: 1;
+}
+
+.celebrity-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.5s ease;
+}
+
+.celebrity-image-wrapper:hover .celebrity-image {
+  transform: scale(1.05);
+}
+
+.celebrity-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+}
+
+.celebrity-avatar-fallback {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-family: var(--serif);
+  color: var(--text);
+  text-transform: uppercase;
+  box-shadow: var(--shadow);
+}
+
+.celebrity-name {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+  padding: 0 1rem;
+  letter-spacing: 0.5px;
+}
+
+/* Info Overlay */
+.celebrity-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(transparent, rgba(6, 6, 14, 0.95));
+  text-align: center;
+}
+
+.celebrity-skin-tone {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+}
+
+.celebrity-undertone {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* Thumbnail Navigation */
+.celebrity-thumbnails {
+  display: flex;
+  gap: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dim) transparent;
+}
+
+.celebrity-thumbnails::-webkit-scrollbar {
+  height: 4px;
+}
+
+.celebrity-thumbnails::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.celebrity-thumbnails::-webkit-scrollbar-thumb {
+  background: var(--gold-dim);
+  border-radius: 2px;
+}
+
+.celebrity-thumb {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: transparent;
+  border: 2px solid transparent;
+  border-radius: var(--r);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 70px;
+}
+
+.celebrity-thumb:hover {
+  background: var(--surface2);
+}
+
+.celebrity-thumb.active {
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.celebrity-thumb-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  transition: all 0.3s ease;
+}
+
+.celebrity-thumb.active .celebrity-thumb-image {
+  border-color: var(--gold);
+  box-shadow: 0 0 15px rgba(100, 149, 237, 0.4);
+}
+
+.celebrity-thumb-name {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.celebrity-thumb.active .celebrity-thumb-name {
+  color: var(--gold);
+}
+
+/* Navigation Buttons */
+.celebrity-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(6, 6, 14, 0.7);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.celebrity-nav-btn:hover {
+  background: var(--gold);
+  color: var(--obsidian);
+  border-color: var(--gold);
+}
+
+.celebrity-nav-btn.prev {
+  left: 1rem;
+}
+
+.celebrity-nav-btn.next {
+  right: 1rem;
+}
+
+/* Dots Indicator */
+.celebrity-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--surface);
+}
+
+.celebrity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.celebrity-dot:hover {
+  background: var(--text-muted);
+}
+
+.celebrity-dot.active {
+  background: var(--gold);
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(100, 149, 237, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .celebrity-slider {
+    max-width: 320px;
+  }
+
+  .celebrity-name {
+    font-size: 1.25rem;
+    bottom: 70px;
+  }
+
+  .celebrity-skin-tone {
+    font-size: 1.1rem;
+  }
+
+  .celebrity-nav-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 1.25rem;
+  }
+
+  .celebrity-nav-btn.prev {
+    left: 0.5rem;
+  }
+
+  .celebrity-nav-btn.next {
+    right: 0.5rem;
+  }
+
+  .celebrity-thumb-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .celebrity-thumb-name {
+    font-size: 0.65rem;
+  }
+}
+
+/* ============================================
+   CELEBRITY REFERENCE (Results Page)
+   ============================================ */
+
+.celebrity-reference {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: linear-gradient(145deg, var(--surface), var(--surface2));
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+}
+
+.celebrity-reference-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.celebrity-reference-icon {
+  color: var(--gold);
+  font-size: 0.875rem;
+}
+
+.celebrity-reference-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.celebrity-reference-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.celebrity-reference-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 15px rgba(100, 149, 237, 0.3);
+}
+
+.celebrity-reference-fallback {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--gold);
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.celebrity-reference-info {
+  flex: 1;
+}
+
+.celebrity-reference-names {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.celebrity-reference-tone {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+  .celebrity-reference {
+    margin: 1rem 0;
+    padding: 0.875rem;
+  }
+
+  .celebrity-reference-image,
+  .celebrity-reference-fallback {
+    width: 50px;
+    height: 50px;
+  }
+
+  .celebrity-reference-names {
+    font-size: 0.9rem;
+  }
+}
+
+/* ============================================
+   SKIN TONE CAROUSEL - CELEBRITY VERSION
+   ============================================ */
+
+.skin-tone-carousel-celebrity {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  perspective: 1200px;
+  overflow: visible;
+}
+
+.skin-tone-carousel-celebrity-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.skin-tone-card-carousel-celebrity {
+  background: linear-gradient(145deg, var(--surface), var(--surface2));
+  border-radius: var(--r-xl);
+  border: 1px solid var(--border);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow 0.3s ease;
+}
+
+.skin-tone-card-carousel-celebrity:hover {
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), var(--glow-gold);
+}
+
+.skin-tone-celebrity-wrap {
+  width: 180px;
+  height: 220px;
+  margin: 0 auto 1.5rem;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 3px solid var(--border);
+  transition: all 0.3s ease;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+}
+
+.skin-tone-celebrity-wrap:hover {
+  border-color: var(--gold);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(100, 149, 237, 0.2);
+}
+
+.skin-tone-celebrity-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.skin-tone-celebrity-wrap:hover img {
+  transform: scale(1.02);
+}
+
+.skin-tone-celebrity-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.75rem;
+  background: linear-gradient(transparent, rgba(6, 6, 14, 0.9));
+  text-align: center;
+}
+
+.skin-tone-celebrity-name-display {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .skin-tone-carousel-celebrity {
+    height: 520px;
+  }
+
+  .skin-tone-carousel-celebrity-item {
+    width: 280px;
+  }
+
+  .skin-tone-celebrity-wrap {
+    width: 150px;
+    height: 190px;
   }
 }

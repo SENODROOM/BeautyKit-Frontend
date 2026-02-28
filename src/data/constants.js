@@ -6,6 +6,10 @@ export const SKIN_TONES = [
     bestEyes: 'Taupe, Soft lavender, Cool champagne',
     avoidColors: 'Orange, Mustard, Neon shades',
     celebrities: 'Nicole Kidman, Emma Stone',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#b8d0e8', '#d4b8e0', '#f0c8d0', '#c0c0c0'],
     lipstick: [
       { name: 'Blue-Red', hex: '#DC143C', finish: 'Matte', vibe: 'Bold' },
@@ -46,6 +50,10 @@ export const SKIN_TONES = [
     bestEyes: 'Taupe, Soft bronze, Warm brown',
     avoidColors: 'Neon orange, Icy blue',
     celebrities: 'Jennifer Aniston, Blake Lively',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#d4a870', '#e8c090', '#b08050', '#f0d0a0'],
     lipstick: [
       { name: 'Dusty Rose', hex: '#DCAE96', finish: 'Matte', vibe: 'Natural' },
@@ -86,6 +94,10 @@ export const SKIN_TONES = [
     bestEyes: 'Copper, Amber, Bronze',
     avoidColors: 'Icy blue, Cool pink',
     celebrities: 'Jessica Alba, Jennifer Lopez',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#c87840', '#d4943c', '#a05828', '#e8b060'],
     lipstick: [
       { name: 'Coral', hex: '#FF7F50', finish: 'Satin', vibe: 'Fresh' },
@@ -126,6 +138,10 @@ export const SKIN_TONES = [
     bestEyes: 'Plum, Bronze, Warm grey',
     avoidColors: 'Chalky beige, Neon pink',
     celebrities: 'Beyoncé, Priyanka Chopra',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#b87070', '#d4a5a5', '#8fbc8f', '#8b4513'],
     lipstick: [
       { name: 'Mauve', hex: '#B784A7', finish: 'Satin', vibe: 'Elegant' },
@@ -166,6 +182,10 @@ export const SKIN_TONES = [
     bestEyes: 'Bronze, Olive green, Deep teal',
     avoidColors: 'Icy lavender, Blue-pink',
     celebrities: 'Kim Kardashian, Rihanna',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#c4501c', '#808000', '#b8860b', '#006d6f'],
     lipstick: [
       { name: 'Brick Red', hex: '#B22222', finish: 'Matte', vibe: 'Bold' },
@@ -206,6 +226,10 @@ export const SKIN_TONES = [
     bestEyes: 'Olive, Warm teal, Bronze shimmer',
     avoidColors: 'Icy silver, Blue-based fuchsia',
     celebrities: 'Serena Williams, Viola Davis',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#8b5e3c', '#6b8e23', '#0f766e', '#c4501c'],
     lipstick: [
       { name: 'Caramel Nude', hex: '#C68E17', finish: 'Cream', vibe: 'Natural' },
@@ -246,6 +270,10 @@ export const SKIN_TONES = [
     bestEyes: 'Burgundy, Navy, Deep green',
     avoidColors: 'Icy pastels, Neon yellow',
     celebrities: "Lupita Nyong'o, Mindy Kaling",
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#722f37', '#000080', '#006400', '#cd7f32'],
     lipstick: [
       { name: 'Nude Brown', hex: '#8B4513', finish: 'Cream', vibe: 'Natural' },
@@ -286,6 +314,10 @@ export const SKIN_TONES = [
     bestEyes: 'Burnt orange, Emerald, Jewel tones',
     avoidColors: 'Icy pink, Silvery grey',
     celebrities: 'Kerry Washington, Iman',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#8b4513', '#ff8c00', '#006400', '#9400d3'],
     lipstick: [
       { name: 'Chocolate Nude', hex: '#5D4037', finish: 'Cream', vibe: 'Natural' },
@@ -326,6 +358,10 @@ export const SKIN_TONES = [
     bestEyes: 'Royal blue, Emerald, Violet',
     avoidColors: 'Ash grey, Pale beige',
     celebrities: 'Naomi Campbell, Alek Wek',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#4b0082', '#006400', '#1e3a8a', '#8b0000'],
     lipstick: [
       { name: 'Deep Berry', hex: '#8B0000', finish: 'Matte', vibe: 'Dramatic' },
@@ -366,6 +402,10 @@ export const SKIN_TONES = [
     bestEyes: 'Emerald, Royal purple, Gold shimmer',
     avoidColors: 'Chalky beige, Ash brown',
     celebrities: 'Djimon Hounsou, Florence Kasumba',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1531384441138-2736e62e0919?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#ff4500', '#9400d3', '#ffd700', '#008080'],
     lipstick: [
       { name: 'Bold Red', hex: '#8B0000', finish: 'Matte', vibe: 'Statement' },
@@ -406,6 +446,10 @@ export const SKIN_TONES = [
     bestEyes: 'Emerald, Deep plum, Bronze',
     avoidColors: 'Mustard yellow, Yellow-beige',
     celebrities: 'Penélope Cruz, Eva Longoria',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1542596594-649edbc13630?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#800020', '#006400', '#6a1a5a', '#cd7f32'],
     lipstick: [
       { name: 'Berry', hex: '#8B0000', finish: 'Satin', vibe: 'Rich' },
@@ -446,6 +490,10 @@ export const SKIN_TONES = [
     bestEyes: 'Deep teal, Olive, Gold shimmer',
     avoidColors: 'Icy pink, Cool lavender',
     celebrities: 'Yara Shahidi, Zendaya',
+    celebrityImages: [
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face',
+      'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop&crop=face'
+    ],
     swatches: ['#008b8b', '#6b8e23', '#cd853f', '#8b0000'],
     lipstick: [
       { name: 'Warm Burgundy', hex: '#800020', finish: 'Matte', vibe: 'Bold' },

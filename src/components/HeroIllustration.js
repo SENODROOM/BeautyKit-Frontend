@@ -28,9 +28,18 @@ export default function HeroIllustration({ colors = {}, id = 'default' }) {
 
   // Derive darker shade for gradient bottom stop
   const topDark = top + 'bb';
+  
+  // Convert hex blush to rgba for proper opacity control
+  const hexToRgba = (hex, alpha) => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
+  
   const blushBase = blush.startsWith('rgba')
-  ? blush.replace(/[\d.]+\)$/, '1)')
-  : blush;
+    ? blush.replace(/[\d.]+\)$/, '1)')
+    : blush.startsWith('#') ? hexToRgba(blush, 1) : blush;
 
   // Unique IDs for this instance
   const uid = `hi-${id}`;
@@ -103,8 +112,8 @@ export default function HeroIllustration({ colors = {}, id = 'default' }) {
       <ellipse cx="168" cy="180" rx="15" ry="10" fill="white" /><ellipse cx="232" cy="180" rx="15" ry="10" fill="white" />
 
       {/* Eyeshadow */}
-      <ellipse cx="168" cy="174" rx="17" ry="8" fill={eyeshadow} opacity="0.55" />
-      <ellipse cx="232" cy="174" rx="17" ry="8" fill={eyeshadow} opacity="0.55" />
+      <ellipse cx="168" cy="174" rx="17" ry="8" fill={eyeshadow} opacity="0.75" />
+      <ellipse cx="232" cy="174" rx="17" ry="8" fill={eyeshadow} opacity="0.75" />
 
       {/* Pupils */}
       <circle cx="168" cy="180" r="9" fill="#3d2010" /><circle cx="232" cy="180" r="9" fill="#3d2010" />
@@ -117,13 +126,13 @@ export default function HeroIllustration({ colors = {}, id = 'default' }) {
 
       {/* Blush */}
    <radialGradient id={`${uid}-hiBlushL`} cx="50%" cy="50%" r="50%">
-  <stop offset="0%"   stopColor={blushBase} stopOpacity="0.5" />
-  <stop offset="50%"  stopColor={blushBase} stopOpacity="0.18" />
+  <stop offset="0%"   stopColor={blushBase} stopOpacity="0.65" />
+  <stop offset="50%"  stopColor={blushBase} stopOpacity="0.25" />
   <stop offset="100%" stopColor={blushBase} stopOpacity="0" />
 </radialGradient>
 <radialGradient id={`${uid}-hiBlushR`} cx="50%" cy="50%" r="50%">
-  <stop offset="0%"   stopColor={blushBase} stopOpacity="0.5" />
-  <stop offset="50%"  stopColor={blushBase} stopOpacity="0.18" />
+  <stop offset="0%"   stopColor={blushBase} stopOpacity="0.65" />
+  <stop offset="50%"  stopColor={blushBase} stopOpacity="0.25" />
   <stop offset="100%" stopColor={blushBase} stopOpacity="0" />
 </radialGradient>
 <filter id={`${uid}-hiBlushBlur`} x="-50%" y="-50%" width="200%" height="200%">
