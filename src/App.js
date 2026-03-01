@@ -1,7 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import './App.css';
 
-const API = 'http://localhost:5000';
+const API = process.env.REACT_APP_API_URL || 'http://localhost:5000';
 
 // ─────────────────────────────────────────────
 // SVG AVATAR COMPONENT (used in dashboard/results only)
