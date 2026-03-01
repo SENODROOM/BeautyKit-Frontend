@@ -21,12 +21,10 @@ export default function LandingPage({ setPage, setAuthMode }) {
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimer);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     updateCarouselStyles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentIndex]);
 
   const goToSlide = (index) => {
