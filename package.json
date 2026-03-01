@@ -22,8 +22,5 @@
       "last 1 safari version"
     ]
   },
-  "build": "react-scripts build --no-eslint",
-  "devDependencies": {
-    "eslint-plugin-react-hooks": "^7.0.1"
-  }
+  "build": "react-scripts build --no-eslint"
 }
