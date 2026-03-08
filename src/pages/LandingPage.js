@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Ambient from '../components/Ambient';
 import HeroIllustration from '../components/HeroIllustration';
 import { SKIN_TONES } from '../data/constants';
@@ -9,29 +9,7 @@ export default function LandingPage({ setPage, setAuthMode }) {
   const itemsRef = useRef([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  useEffect(() => {
-    updateCarouselStyles();
-    let resizeTimer = null;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(updateCarouselStyles, 120);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      clearTimeout(resizeTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    updateCarouselStyles();
-  }, [currentIndex]);
-
-  const goToSlide = (index) => {
-    setCurrentIndex(((index % SKIN_TONES.length) + SKIN_TONES.length) % SKIN_TONES.length);
-  };
-
-  const updateCarouselStyles = () => {
+  const updateCarouselStyles = useCallback(() => {
     const items = itemsRef.current;
     const totalItems = items.length;
     if (!items || totalItems === 0) return;
@@ -86,6 +64,28 @@ export default function LandingPage({ setPage, setAuthMode }) {
         item.style.zIndex = '1';
       }
     });
+  }, [currentIndex]);
+
+  useEffect(() => {
+    updateCarouselStyles();
+    let resizeTimer = null;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(updateCarouselStyles, 120);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimer);
+    };
+  }, [updateCarouselStyles]);
+
+  useEffect(() => {
+    updateCarouselStyles();
+  }, [currentIndex, updateCarouselStyles]);
+
+  const goToSlide = (index) => {
+    setCurrentIndex(((index % SKIN_TONES.length) + SKIN_TONES.length) % SKIN_TONES.length);
   };
 
   return (

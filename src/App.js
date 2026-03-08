@@ -6,7 +6,7 @@ import DashboardPage from './pages/DashboardPage';
 import ScanPage from './pages/ScanPage';
 import AnalyzingPage from './pages/AnalyzingPage';
 import ResultsPage from './pages/ResultsPage';
-import { getToken, setToken, removeToken, apiFetch } from './utils/api';
+import { getToken, removeToken, apiFetch } from './utils/api';
 import { extractSkinPixels } from './utils/imageProcessing';
 
 export default function App() {
