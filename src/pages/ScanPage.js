@@ -77,7 +77,6 @@ export default function ScanPage({ user, setPage, setAuthMode, scanError, setSca
   function buildRecommendationsFromSkinTone(skinTone, hex) {
     const isWarm = skinTone.undertone === 'Warm';
     const isCool = skinTone.undertone === 'Cool';
-    const isNeutral = !isWarm && !isCool;
     
     // Extended lipstick shades (10+)
     const getLipstickShades = () => {
