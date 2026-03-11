@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Ambient from '../components/Ambient';
 import ColorPicker from '../components/ColorPicker';

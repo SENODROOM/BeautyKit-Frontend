@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Ambient from '../components/Ambient';
-import { apiFetch } from '../utils/api';
 import HeroIllustration from '../components/HeroIllustration';
 
 export default function DashboardPage({ user, logout, profiles, loadProfile, deleteProfile }) {
