@@ -11,6 +11,7 @@ export default function AuthPage({ authMode, setAuthMode, setUser, loadProfiles 
   const [authLoading, setAuthLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState({ score: 0, label: '', color: '' });
+  const [rememberMe, setRememberMe] = useState(true); // Default to checked
 
   useEffect(() => {
     if (authMode === 'signup') {
@@ -28,7 +29,7 @@ export default function AuthPage({ authMode, setAuthMode, setUser, loadProfiles 
         ? { name: authForm.name, email: authForm.email, password: authForm.password }
         : { email: authForm.email, password: authForm.password };
       const data = await apiFetch(ep, { method: 'POST', body: JSON.stringify(body) });
-      setToken(data.token);
+      setToken(data.token, rememberMe);
       setUser(data.user);
       await loadProfiles();
       navigate('/dashboard');
@@ -78,6 +79,17 @@ export default function AuthPage({ authMode, setAuthMode, setUser, loadProfiles 
                   {passwordStrength.label && <div className="strength-label" style={{ color: passwordStrength.color }}>{passwordStrength.label}</div>}
                 </div>
               )}
+            </div>
+            <div className="field remember-me-field">
+              <label className="checkbox-label">
+                <input 
+                  type="checkbox" 
+                  checked={rememberMe} 
+                  onChange={e => setRememberMe(e.target.checked)} 
+                />
+                <span className="checkmark"></span>
+                Remember me for 30 days
+              </label>
             </div>
             <button type="submit" className="btn-primary full" disabled={authLoading}>{authLoading ? 'Please wait...' : authMode === 'signup' ? 'Create Account' : 'Sign In'}</button>
           </form>

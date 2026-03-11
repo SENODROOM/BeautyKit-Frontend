@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AuthPage from './pages/AuthPage';
 import DashboardPage from './pages/DashboardPage';
@@ -17,25 +17,41 @@ export default function App() {
   const [results, setResults] = useState(null);
   const [scanError, setScanError] = useState('');
   const [profiles, setProfiles] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const canvasRef = useRef();
 
   useEffect(() => {
     const token = getToken();
+    
     if (token) {
+      // Validate token by calling /api/auth/me
       apiFetch('/api/auth/me')
         .then(u => {
           setUser(u);
           loadProfiles();
         })
-        .catch(() => removeToken());
+        .catch(err => {
+          console.error('Token validation failed:', err);
+          removeToken();
+          setUser(null);
+          setProfiles([]);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
   async function loadProfiles() {
     try {
       const p = await apiFetch('/api/profiles');
-      setProfiles(p);
-    } catch { }
+      setProfiles(p || []);
+    } catch (err) {
+      console.error('Failed to load profiles:', err);
+      setProfiles([]);
+    }
   }
 
   function logout() {
@@ -113,26 +129,33 @@ export default function App() {
       <div className="app-wrapper">
         <canvas ref={canvasRef} style={{ display: 'none' }} />
         
-        <Routes>
-          <Route path="/" element={<LandingPage {...sharedProps} />} />
-          <Route path="/auth" element={<AuthPage {...sharedProps} authMode={authMode} setAuthMode={setAuthMode} setUser={setUser} />} />
-          <Route 
-            path="/dashboard" 
-            element={user ? <DashboardPage {...sharedProps} /> : <Navigate to="/auth" />} 
-          />
-          <Route 
-            path="/scan" 
-            element={user ? <ScanPage {...sharedProps} /> : <Navigate to="/auth" />} 
-          />
-          <Route 
-            path="/analyzing" 
-            element={user ? <AnalyzingPage capturedImage={capturedImage} /> : <Navigate to="/auth" />} 
-          />
-          <Route 
-            path="/results" 
-            element={user ? <ResultsPage {...sharedProps} /> : <Navigate to="/auth" />} 
-          />
-        </Routes>
+        {isLoading ? (
+          <div className="loading-screen">
+            <div className="loading-spinner">✦</div>
+            <div className="loading-text">Beauty Kit</div>
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={<LandingPage {...sharedProps} />} />
+            <Route path="/auth" element={<AuthPage {...sharedProps} authMode={authMode} setAuthMode={setAuthMode} setUser={setUser} />} />
+            <Route 
+              path="/dashboard" 
+              element={<DashboardPage {...sharedProps} />} 
+            />
+            <Route 
+              path="/scan" 
+              element={user ? <ScanPage {...sharedProps} /> : <Navigate to="/auth" />} 
+            />
+            <Route 
+              path="/analyzing" 
+              element={user ? <AnalyzingPage capturedImage={capturedImage} /> : <Navigate to="/auth" />} 
+            />
+            <Route 
+              path="/results" 
+              element={user ? <ResultsPage {...sharedProps} /> : <Navigate to="/auth" />} 
+            />
+          </Routes>
+        )}
       </div>
     </Router>
   );
