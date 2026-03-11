@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Ambient from '../components/Ambient';
 import { apiFetch, setToken } from '../utils/api';
 import { calculatePasswordStrength } from '../utils/helpers';
 
-export default function AuthPage({ setPage, authMode, setAuthMode, setUser, loadProfiles }) {
+export default function AuthPage({ authMode, setAuthMode, setUser, loadProfiles }) {
+  const navigate = useNavigate();
   const [authForm, setAuthForm] = useState({ name: '', email: '', password: '' });
   const [authError, setAuthError] = useState('');
   const [authLoading, setAuthLoading] = useState(false);
@@ -29,7 +31,7 @@ export default function AuthPage({ setPage, authMode, setAuthMode, setUser, load
       setToken(data.token);
       setUser(data.user);
       await loadProfiles();
-      setPage('dashboard');
+      navigate('/dashboard');
     } catch (err) {
       setAuthError(err.message);
     }
@@ -41,7 +43,7 @@ export default function AuthPage({ setPage, authMode, setAuthMode, setUser, load
       <Ambient />
       <div className="auth-page">
         <div className="auth-card">
-          <button className="back-btn" onClick={() => setPage('landing')}>← Back</button>
+          <button className="back-btn" onClick={() => navigate('/')}>← Back</button>
           <div className="auth-brand">Beauty Kit</div>
           <h2 className="auth-title">{authMode === 'signup' ? 'Create Account' : 'Welcome Back'}</h2>
           <p className="auth-sub">{authMode === 'signup' ? 'Start your beauty intelligence journey' : 'Sign in to your beauty profiles'}</p>

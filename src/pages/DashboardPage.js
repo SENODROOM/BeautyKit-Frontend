@@ -1,9 +1,11 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Ambient from '../components/Ambient';
 
 import HeroIllustration from '../components/HeroIllustration';
 
-export default function DashboardPage({ user, logout, setPage, profiles, loadProfile, deleteProfile }) {
+export default function DashboardPage({ user, logout, profiles, loadProfile, deleteProfile }) {
+  const navigate = useNavigate();
   return (
     <div className="app">
       <Ambient />
@@ -20,14 +22,14 @@ export default function DashboardPage({ user, logout, setPage, profiles, loadPro
             <h2 className="dash-title">Your Beauty Profiles</h2>
             <p className="dash-sub">Save multiple skin analysis results for different people or occasions.</p>
           </div>
-          <button className="btn-primary" onClick={() => setPage('scan')}>+ New Scan</button>
+          <button className="btn-primary" onClick={() => navigate('/scan')}>+ New Scan</button>
         </div>
         {profiles.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">◈</div>
             <h3>No profiles yet</h3>
             <p>Scan your skin tone to create your first beauty profile.</p>
-            <button className="btn-primary" onClick={() => setPage('scan')}>Start Your First Scan</button>
+            <button className="btn-primary" onClick={() => navigate('/scan')}>Start Your First Scan</button>
           </div>
         ) : (
           <div className="profiles-grid">
